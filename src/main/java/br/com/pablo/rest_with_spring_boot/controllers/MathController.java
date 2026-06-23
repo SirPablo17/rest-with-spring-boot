@@ -24,9 +24,46 @@ public class MathController {
         return convertToDouble(numberOne) - convertToDouble(numberTwo);
     }
 
+    //http://localhost:8080/math/multiplication/3/5
 
+    @RequestMapping("/multiplication/{numberOne}/{numberTwo}")
+    public Double multiplication(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception{
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo))
+            throw new UnsupportedMathOperationException("Please set a numeric value");
+        return convertToDouble(numberOne) * convertToDouble(numberTwo);
+    }
 
-    //http://localhost:8080/math/sum/3/5
+    //http://localhost:8080/math/division/3/5
+
+    // Um número não pode ser divisivel por zero
+    @RequestMapping("/division/{numberOne}/{numberTwo}")
+    public Double division (@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception{
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)){
+            throw new UnsupportedMathOperationException("Please set a numeric value");
+        } else if (convertToDouble(numberTwo) <= 0) {
+            throw new UnsupportedMathOperationException("Please define a number that is divisible by 0 (zero).");
+        }
+        return convertToDouble(numberOne) / convertToDouble(numberTwo);
+    }
+
+    //http://localhost:8080/math/average/3/5
+    @RequestMapping("/average/{numberOne}/{numberTwo}")
+    public Double average(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception{
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo))
+            throw new UnsupportedMathOperationException("Please set a numeric value");
+
+        return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
+    }
+
+    //http://localhost:8080/math/average/3/5
+    @RequestMapping("/pow/{numberOne}/{numberTwo}")
+    public Double squareRoot(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception{
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo))
+            throw new UnsupportedMathOperationException("Please set a numeric value");
+
+        return Math.pow(convertToDouble(numberOne), convertToDouble(numberTwo));
+    }
+
 
     private Double convertToDouble(String strNumber) throws IllegalAccessException {
         if (strNumber == null || strNumber.isEmpty())
