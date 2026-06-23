@@ -56,12 +56,12 @@ public class MathController {
     }
 
     //http://localhost:8080/math/average/3/5
-    @RequestMapping("/pow/{numberOne}/{numberTwo}")
-    public Double squareRoot(@PathVariable("numberOne") String numberOne, @PathVariable("numberTwo") String numberTwo) throws Exception{
-        if(!isNumeric(numberOne) || !isNumeric(numberTwo))
+    @RequestMapping("/squareRoot/{numberOne}")
+    public Double squareRoot(@PathVariable("numberOne") String numberOne) throws Exception{
+        if(!isNumeric(numberOne))
             throw new UnsupportedMathOperationException("Please set a numeric value");
 
-        return Math.pow(convertToDouble(numberOne), convertToDouble(numberTwo));
+        return Math.sqrt(convertToDouble(numberOne));
     }
 
 
